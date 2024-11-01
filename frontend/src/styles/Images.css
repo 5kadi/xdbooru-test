@@ -1,0 +1,15 @@
+.image-container {
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 150px);
+        gap: 15px;
+        float: right;
+    }
+    
+    .image-grid * {
+
+    }
+}
+
+

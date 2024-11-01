@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.a-nav-link {
+    @apply p-1 md:p-2 text-gray-400 hover:text-gray-500 cursor-pointer
+}
+
+.selectable-text {
+    @apply md:p-1 rounded cursor-pointer hover:bg-gray-200 transition duration-200
+}
+
+.popdown-menu {
+    @apply absolute inset-0 origin-top 
+}
+
+.a-action-link {
+    @apply transition duration-200 text-white rounded cursor-pointer text-center
+}
+.a-action-link-positive {
+    @apply bg-cyan-300 hover:bg-cyan-400 a-action-link
+}
+.a-action-link-negative {
+    @apply bg-red-400 hover:bg-red-500 a-action-link
+}
+.shadow-transition {
+    @apply shadow hover:shadow-lg transition duration-200
+}
+
