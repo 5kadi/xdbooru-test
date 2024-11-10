@@ -7,10 +7,8 @@ function ResizingTextarea({textState, setText, placeholder}) {
 
     useEffect(
         () => {
-            if (!textState || !textState.length) {
-                textAreaRef.current.style.height = 'auto'
-                textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px'
-            }
+            textAreaRef.current.style.height = 'auto'
+            textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px'
         }, [textState]
     )
 

@@ -5,8 +5,6 @@ import "../index.css"
 
 function Home() {
 
-
-
     return (
         <>  
             <div className="flex flex-col justify-center items-center h-screen w-4/6 mx-auto">

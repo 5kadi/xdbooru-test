@@ -15,7 +15,7 @@ urlpatterns = [
     path('images/get/', GetImages.as_view({'get': 'get_by_search'}), name='images_get'),
     path('images/get/<int:pk>/', GetImages.as_view({'get': 'get_by_pk'}), name='images_get_pk'),
     path('images/create/', CreateImages.as_view(), name='images_create'),
-    path('images/update/<int:pk>', ChangeImageTags.as_view(), name='images_update'),
+    path('images/edit/<int:pk>', EditImageInfo.as_view(), name='images_edit'),
     path('images/delete/<int:pk>', DeleteImages.as_view(), name='test_images_delete'), #exxperimental
 
     path('tags/create/', CreateTags.as_view(), name='tags_create'),
@@ -28,6 +28,5 @@ urlpatterns = [
 
     path('user/profile/', UserProfile.as_view({'get': 'current_user'}), name='current_profile'),
     path('profile/<str:username>/', UserProfile.as_view({'get': 'lookup_user'}), name='user_profile'),
-
 ]
 

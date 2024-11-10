@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied, RequestDataTooBig
 from .models import Images, Tags, Comments
 from .serializers import *
 from rest_framework import generics, viewsets, views
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, action, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from .pagination import StandardPaginator, ImagesPaginator
 from .utils import *
 
@@ -23,10 +24,7 @@ class CreateUser(generics.CreateAPIView):
         if serializer.is_valid():
             serializer.save(is_active=True)
         else:
-            return Response({
-                'message': 'error',
-                'error': serializer.errors
-            })
+            raise ValidationError(serializer.errors)
 
 class UserProfile(viewsets.ViewSet):
 
@@ -65,25 +63,18 @@ class CreateImages(generics.CreateAPIView):
             tags = self.request.POST.get('tags', False).split('+')
             tags = validate_tags(tags)
             if not tags:
-                return Response({
-                    'message': 'error',
-                    'error': 'Tags are required!'
-                })
+                raise ValidationError(['Valid tags for an image have not been provided!'])
             serializer.save(user=self.request.user, tags=tags)
             for tag in tags:
                 tag.change_amount()
         else:
-            return Response({
-                'message': 'error',
-                'error': serializer.errors
-            })
+            return ValidationError(serializer.errors)
 
 class GetImages(viewsets.ViewSet):
-
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    def get_by_pk(self, request, pk, **kwargs):
+    def get_by_pk(self, request, pk, *args, **kwargs):
         image = get_object_or_404(Images, pk=pk)
         serializer = ImagesSerializer(image)
         return Response(serializer.data)
@@ -130,18 +121,11 @@ class CreateTags(generics.CreateAPIView):
             if is_unique(tag_name):
                 serializer.save()
             else:
-                return Response({
-                    'message': 'error',
-                    'error': 'Tag with such name already exists!'
-                })
+                raise ValidationError(['Tag with such name already exists!'])
         else:
-            return Response({
-                'message': 'error',
-                'error': serializer.errors
-            })
+            raise ValidationError(['Given data is not valid!'])
 
 class GetTags(viewsets.ViewSet):
-
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -167,47 +151,36 @@ class GetTags(viewsets.ViewSet):
             serializer = TagsSerializer(tag)
             return Response(serializer.data)
 
-class ChangeImageTags(generics.UpdateAPIView):
+class EditImageInfo(views.APIView):
     permission_classes = [IsAuthenticated]
 
-    def patch(self, request, *args, **kwargs):
-        image_pk = kwargs.get('pk')
+    def patch(self, request, pk, *args, **kwargs):
+        image = get_object_or_404(Images, pk=pk)
+        if not check_ownership(request.user, image):
+            raise PermissionDenied()
+        description = request.data.get('description')
+        if len(description) < 1:
+            raise ValidationError(['Image should have a description!'])
+
         tags = request.data.get('tags')
-        remove_flag = request.data.get('remove')
-        if not image_pk:
-            return Response({
-                'message': 'error',
-                'error': 'No pk was provided!'
-            })
-        
-        image = get_object_or_404(Images, pk=image_pk)
+        if len(tags) < 1:
+            raise ValidationError(['Image should have at least 1 tag!'])
         validated_tags = validate_tags(tags)
         if not validated_tags:
-            return Response({
-                'message': 'error',
-                'error': 'Invalid tags!'
-            })
+            raise ValidationError(['No valid tags were provided!'])
         
-        image_tags = [*image.tags.all()]
-        if remove_flag:
-            if len(image_tags) == 1:
-                return Response({
-                    'message': 'error',
-                    'error': 'Image should have at least 1 tag!'
-                })
-            tags = list(filter(lambda tag: tag not in validated_tags, image_tags))
-        else:
-            tags = [*image_tags, *validated_tags]
-        serializer = ImagesSerializer(image, data={'tags': tags}, partial=True)
-    
-        if serializer.is_valid():  
-            #print([tag.tag for tag in tags], [tag.tag for tag in validated_tags])
-            serializer.save(tags=tags)
+        serializer = ImagesSerializer(
+            image,
+            data={
+                'tags': validated_tags,
+                'description': description
+            },
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save(tags=validated_tags, description=description)
             return Response(serializer.data)
-        return Response({
-            'message': 'error',
-            'error': 'Something went wrong!'
-        })
+        raise ValidationError(serializer.errors)
 
 class CreateComments(generics.CreateAPIView):
     queryset = Comments.objects.all()
@@ -227,8 +200,6 @@ class CreateComments(generics.CreateAPIView):
             })      
         
 class GetComments(generics.ListAPIView):
-    queryset = Comments.objects.all()
-    serializer_class = CommentsSerializer
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -236,12 +207,6 @@ class GetComments(generics.ListAPIView):
         image_pk = kwargs.get('image_pk')
         username = kwargs.get('username') 
         search_kwargs = {}
-
-        if not(image_pk) and not(username):
-            return Response({
-                'message': 'error',
-                'error': 'No search credentials were provided!'
-            })
         
         if username:
             search_kwargs['user'] = get_object_or_404(User, username=username)
@@ -251,6 +216,8 @@ class GetComments(generics.ListAPIView):
         comments = Comments.objects.filter(**search_kwargs).order_by('-pk')
         data = paginate_data(request, comments, StandardPaginator, CommentsSerializer)
         return StandardPaginator.get_paginated_response(data)
+
+
 
 
 

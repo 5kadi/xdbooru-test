@@ -34,13 +34,18 @@ def is_unique(tag_name: str) -> True | False:
     else:
         return False
 
-def get_unique_tags_by_images(images):
-    img_objs = Images.objects.filter(pk__in=images).order_by('-pk')[0:5]
+def get_unique_tags_by_images(images) -> list:
+    img_objs = Images.objects.filter(pk__in=images).order_by('-pk')[0:100]
     tags = []
     for img in img_objs:
         tags += [*img.tags.all()]
     serializer = InfoTagsSerializer(set(tags), many=True)
     return serializer.data
+
+def check_ownership(user, obj) -> True | False:
+    if user == obj.user:
+        return True
+    return False
 
 def paginate_data(request, data, paginator, serializer):
     images_paginated = paginator.paginate_queryset(data, request)

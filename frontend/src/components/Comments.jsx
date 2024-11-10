@@ -3,16 +3,19 @@ import api from "../api";
 import CommentCard from "./CommentCard";
 import { useLocation } from "react-router-dom";
 import ResizingTextarea from "./ResizingTextarea";
+import ErrorWindow from "./ErrorWindow";
 
 
 function Comments({imageId}){
+    const [error, setError] = useState(null)
+
     const [comments, setComments] = useState()
     const [comment, setComment] = useState('')
 
     useEffect(
         () => {
             fetchComments()
-        }, [comment]
+        }, []
     )
 
 
@@ -24,13 +27,12 @@ function Comments({imageId}){
                     setComments(response.data.results)
                     return
                 }
-                alert('error')
                 
             }
         )
         .catch(
             error => {
-                alert(error)
+                setError(error)
             }
         )
     }
@@ -49,15 +51,14 @@ function Comments({imageId}){
                 response => {
                     if (response.status === 201) {
                         setComment('')
-                        console.log(4)
+                        fetchComments()
                         return
                     }
-                    alert('error')
                 }
             )
             .catch(
                 error => {
-                    alert(error)
+                    setError(error)
                 }
             )
         }
@@ -66,6 +67,7 @@ function Comments({imageId}){
  
     return (
         <>  
+            <ErrorWindow error={error} setError={setError}/>
             <div className="container ">
                 <div className="w-full mb-8 md:mb-16">
                     <form 
@@ -80,7 +82,8 @@ function Comments({imageId}){
                         <button 
                             type='submit'
                             className={
-                                `${comment.length ? 'a-action-link-positive' : 'a-action-link-negative'} py-1 md:py-2 px-2 md:px-4  w-1/3`
+                                `${comment.length ? 'a-action-link-positive' : 'a-action-link-negative'} 
+                                py-1 md:py-2 px-2 md:px-4 w-1/3`
                             }
                         >
                             Post!

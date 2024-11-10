@@ -100,7 +100,7 @@ function App() {
           }
         />
         <Route
-          path='/xd' //*
+          path='*' //*
           element={
             <NotFound></NotFound>
           }

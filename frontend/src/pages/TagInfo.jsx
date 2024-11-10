@@ -43,12 +43,10 @@ function TagInfo(props) {
             <NavMenu/>
             {
                 data ? 
-                    <div className="grid grid-cols-9 mx-auto w-11/12 mb-12">
-                        <div className="col-span-4">
+                    <div className="flex flex-col mx-auto w-11/12 mb-12">
                             <TagSearchBar/>
-                        </div>
                         <div 
-                            className="col-span-5 rounded shadow mx-auto h-fit min-h-[50vh] w-3/4 p-1 md:p-2
+                            className="rounded shadow mx-auto h-fit min-h-[50vh] w-3/4 p-1 md:p-2
                             flex flex-col justify-between"
                         > 
                             <div className="flex flex-col">

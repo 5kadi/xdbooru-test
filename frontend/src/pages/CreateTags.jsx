@@ -4,15 +4,18 @@ import { TAGS_TYPES, COLORS } from "../constants"
 import NavMenu from "../components/NavMenu"
 import ResizingTextarea from "../components/ResizingTextarea"
 import { useNavigate } from "react-router-dom"
+import ErrorWindow from "../components/ErrorWindow"
 
 
 function CreateTags(){
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
+
     const [tag, setTag] = useState('')
     const [type, setType] = useState('NE')
     const [description, setDescription] = useState('')
     const [hover, setHover] = useState(false)
 
-    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -32,20 +35,19 @@ function CreateTags(){
                         navigate(`/tags/?tag=${formattedTag}`)
                         return
                     }
-                    alert('error')
                 }
             )
             .catch(
                 error => {
-                    alert(error)
+                    setError(error)
                 }
             )
         }
     }
 
-    //TODO: selector sliders
     return (
         <>
+            <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
             <div className="flex justify-center mt-12 md:mt-24">
                 <div className="w-2/3">

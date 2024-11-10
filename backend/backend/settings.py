@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ijrl=rbmic6f$!pkcycues0%qw2c$5mr@c9l^li(53%ja5$7&r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True #TODO: configure Nginx to server images
 
 ALLOWED_HOSTS = ['*']
 

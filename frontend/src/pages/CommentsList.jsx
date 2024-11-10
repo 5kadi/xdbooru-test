@@ -3,11 +3,14 @@ import { useLocation, useParams, useSearchParams } from "react-router-dom"
 import api from "../api"
 import CommentCard from "../components/CommentCard"
 import '../styles/Images.css'
+import ErrorWindow from "../components/ErrorWindow"
 
 
 
 function CommentsList() {
+    const [error, setError] = useState(null)
     const {username} = useParams()
+
     const [currentPageURL, setCurrentPageURL] = useState(`api/comments/get/user/${username}`)
     const [nextPageURL, setNextPageURL] = useState()
     const [prevPageURL, setPrevPageURL] = useState()
@@ -16,7 +19,6 @@ function CommentsList() {
     useEffect(
         () => {
             fetchComments()
-
         }, [currentPageURL]
     )
     
@@ -28,21 +30,20 @@ function CommentsList() {
                     setComments(response.data.results)
                     setNextPageURL(response.data.next ? response.data.next: currentPageURL)
                     setPrevPageURL(response.data.previous ? response.data.previous: currentPageURL)
-
                     return
                 }
-                alert('error') //TODO: error handling
             }
         )
         .catch(
             error => {
-                alert(error) //TODO: error handling Xd
+                setError(error)
             }
         )
     }   
 
     return (
         <>  
+            <ErrorWindow error={error} setError={setError}/>
             <div className="image-container">
                 <h1>Comments</h1>
                 <div className='image-grid'>

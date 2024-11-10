@@ -3,12 +3,14 @@ import api from "../api"
 import { useParams } from "react-router-dom"
 import ActivityInfoSlider from "../components/ActivityInfoSlider"
 import NavMenu from "../components/NavMenu"
-import { withProtection } from "../utils/Protection"
+import ErrorWindow from "../components/ErrorWindow"
 
 
 
 function Profile({isLogged}) {
+    const [error, setError] = useState(null)
     const {username} = useParams()
+
     const url = isLogged ? 'api/user/profile/' : `api/profile/${username}/`
     const [profileData, setProfileData] = useState()
 
@@ -31,13 +33,14 @@ function Profile({isLogged}) {
         )
         .catch(
             error => {
-                alert(error)
+                setError(error)
             }
         )
     }
 
     return (
         <>  
+            <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
             <div>
                 {
@@ -46,14 +49,14 @@ function Profile({isLogged}) {
                             <div className="rounded shadow mb-4 md:mb-8 mx-12 p-4 md:p-8 text-center">
                                 {
                                     !isLogged ?
-                                        <h1 className="text-2xl md:text-4xl font-bold mb-4 md:mb-8 ">
+                                        <h1 className="text-2xl md:text-4xl font-bold mb-4 md:mb-8 h-fit break-all">
                                             <span className="text-3xl md:text-5xl text-cyan-300">
                                                 {profileData.user.username}
                                             </span>'s profile
                                         </h1>
                                     : 
-                                        <h1 className="text-2xl md:text-4xl font-bold mb-4 md:mb-8 ">
-                                            Your profile
+                                        <h1 className="text-2xl md:text-4xl font-bold mb-4 md:mb-8 h-fit break-all">
+                                            {profileData.user.username}
                                         </h1>
                                 }
                                 <div className="flex flex-col gap-6">

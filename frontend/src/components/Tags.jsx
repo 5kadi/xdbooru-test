@@ -75,7 +75,7 @@ function ViewTags({imageTags}){
     )
 }
 
-function EditTags({tags, imageId}) {
+function EditTags({imageId, imageTags}) {
     const deleteTag = (tagName) => {
         api.patch(
             `api/images/update/${imageId}`,
@@ -98,16 +98,33 @@ function EditTags({tags, imageId}) {
 
     return (
         <>
-            <div>
-                {  
-                    tags.map(
-                        tag => (
-                            <p>{tag.tag} <span>{tag.amount}</span> <span onClick={e => deleteTag(tag.tag)}>X</span></p>
+            <div className="flex flex-col px-2 md:px-6 rounded shadow h-full">
+                <h3 className="text-center text-3xl font-bold mb-2 md:mb-4 text-gray-400">Tags</h3>
+                <div className="h-fit text-lg md:text-md"> 
+                    {  
+                        imageTags?.map(
+                            tag => ( 
+                                <div className="grid grid-cols-12 mb-4 md:mb-0">
+                                    <a 
+                                        href={`/tags/?tag=${tag.tag}`}
+                                        className="col-span-1 text-center text-gray-400 hover:text-gray-500 my-auto"
+                                    >
+                                        ?
+                                    </a>
+                                    <a 
+                                        href={`/images/?tags=${tag.tag}`}
+                                        className="col-span-11 break-all selectable-text grid grid-cols-6"
+                                    >   
+                                        <span className={`col-span-5 ${COLORS[tag.type]}`}>{tag.tag}</span>
+                                        <span className="col-span-1 text-center">{tag.amount}</span>
+                                    </a>
+
+                                </div>
+                            )
                         )
-                    )
-                }
+                    }
+                </div>
             </div>
-            <SearchBar patchConfig={{imageId: imageId}}/>
         </>
     )
 }

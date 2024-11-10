@@ -5,13 +5,16 @@ import NavMenu from "../components/NavMenu"
 import { AddTagSearchBar } from "../components/SearchBars"
 import ImageDrop from "../components/ImageDrop"
 import ResizingTextarea from "../components/ResizingTextarea"
-import TagList from "../components/TagList"
+import {LazyTagList} from "../components/TagList"
+import ErrorWindow from "../components/ErrorWindow"
 
 function CreateImages() {
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
+
     const [file, setFile] = useState()
     const [tags, setTags] = useState([])
     const [description, setDescription] = useState('')
-    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -37,13 +40,11 @@ function CreateImages() {
                     if (response.status === 201) {
                         navigate(`/images/${response.data.id}`)
                     }
-                    console.log(response.data)
-                    
                 }
             )
             .catch(
                 error => {
-                    alert(error)
+                    setError(error)
                 }
             )
             return
@@ -53,8 +54,9 @@ function CreateImages() {
 
     return (
         <>      
+            <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
-            <div className="mx-6 md:mx-12 h-fit mb-12 ">
+            <div className="mx-6 md:mx-12 h-fit mb-16 ">
                 <h1
                     className="text-2xl md:text-3xl text-cyan-300 font-bold mb-4 md:mb-8 text-center"  
                 >
@@ -80,7 +82,7 @@ function CreateImages() {
                         >   
                             <AddTagSearchBar setTags={setTags}/>
                             {
-                                tags.length >= 1 && <TagList tags={tags}/>
+                                tags.length >= 1 && <LazyTagList tags={tags} setTags={setTags}/>
                             }
                         </div>
                     </div>

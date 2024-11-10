@@ -30,7 +30,6 @@ class Tags(models.Model):
         self.save()
 
 
-
 class Images(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='images/')

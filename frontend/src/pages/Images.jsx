@@ -6,9 +6,11 @@ import '../styles/Images.css'
 import { ViewTags } from "../components/Tags"
 import NavMenu from "../components/NavMenu"
 import {SearchBar} from "../components/SearchBars"
+import ErrorWindow from "../components/ErrorWindow"
 
 
 function Images() {
+    const [error, setError] = useState(null)
     const search = useLocation().search
     
     const [currentPageURL, setCurrentPageURL] = useState(`api/images/get/${search}`)
@@ -34,18 +36,18 @@ function Images() {
                     setPrevPageURL(u => previous ? previous.substr(previous.lastIndexOf('/') + 1) || '?page=1' : null)
                     return
                 }
-                alert('error') //TODO: error handling
             }
         )
         .catch(
             error => {
-                alert(error) //TODO: error handling Xd
+                setError(error)
             }
         )
     }   
 
     return (
         <>  
+            <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
             <SearchBar></SearchBar>
             <div className="grid grid-cols-12 h-screen w-11/12">
