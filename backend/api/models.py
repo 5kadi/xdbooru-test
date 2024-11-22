@@ -22,12 +22,12 @@ class Tags(models.Model):
     description = models.TextField()
     amount = models.IntegerField(default=0)
 
-    def change_amount(self, increment=True, value=1):
-        if increment:
-            self.amount += value
-        else:
-            self.amount -= value
+    #This method is kinda low effort
+    def count_amount(self):
+        rel_images = Images.objects.filter(tags=self)
+        self.amount = len(rel_images)
         self.save()
+        
 
 
 class Images(models.Model):

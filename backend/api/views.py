@@ -66,7 +66,7 @@ class CreateImages(generics.CreateAPIView):
                 raise ValidationError(['Valid tags for an image have not been provided!'])
             serializer.save(user=self.request.user, tags=tags)
             for tag in tags:
-                tag.change_amount()
+                tag.count_amount()
         else:
             return ValidationError(serializer.errors)
 
@@ -106,7 +106,7 @@ class DeleteImages(generics.DestroyAPIView):
         image = get_object_or_404(Images, pk=pk)
 
         for tag in image.tags.all():
-            tag.change_amount(increment=False)
+            tag.count_amount()
 
         return super().delete(request, *args, **kwargs)      
 
