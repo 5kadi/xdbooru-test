@@ -38,3 +38,6 @@ db.sqlite3
 media
 migrations
 start.cmd
+
+#db
+backend/data.json
