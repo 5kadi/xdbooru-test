@@ -40,4 +40,4 @@ migrations
 start.cmd
 
 #db
-backend/data.json
+data.json
