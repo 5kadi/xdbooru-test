@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ijrl=rbmic6f$!pkcycues0%qw2c$5mr@c9l^li(53%ja5$7&r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #TODO: configure Nginx to server images
+DEBUG = False #TODO: configure Nginx to server images
 
 ALLOWED_HOSTS = ['*']
 
@@ -103,11 +103,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangodb',
-        'USER': 'django_admin',
-        'PASSWORD': '36918',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'djangodb'),
+        'USER': os.getenv('POSTGRES_USER', 'django_admin'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '36918'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 

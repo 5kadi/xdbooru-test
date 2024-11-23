@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from .pagination import StandardPaginator, ImagesPaginator
 from .utils import *
+from copy import copy
 
 
 #!!!ATTENTION!!!
@@ -96,6 +97,7 @@ class GetImages(viewsets.ViewSet):
         data = paginate_data(request, images, ImagesPaginator, InfoImagesSerializer) #info serializer
         return ImagesPaginator.get_paginated_response(data)
 
+#WIP
 class DeleteImages(generics.DestroyAPIView):
     queryset = Images.objects.all()
     serializer_class = ImagesSerializer
@@ -178,7 +180,10 @@ class EditImageInfo(views.APIView):
             partial=True
         )
         if serializer.is_valid():
+            prev_image_tags = [*image.tags.all()]
             serializer.save(tags=validated_tags, description=description)
+            for tag in set(validated_tags + prev_image_tags):
+                tag.count_amount()
             return Response(serializer.data)
         raise ValidationError(serializer.errors)
 

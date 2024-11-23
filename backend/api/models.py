@@ -36,6 +36,8 @@ class Images(models.Model):
     description = models.TextField()
     tags = models.ManyToManyField(to=Tags) #TODO: custom? | NOTE: many images to many tags
     date = models.DateTimeField(auto_now_add=True)
+
+    
         
 
 class Comments(models.Model):

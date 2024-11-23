@@ -16,7 +16,7 @@ urlpatterns = [
     path('images/get/<int:pk>/', GetImages.as_view({'get': 'get_by_pk'}), name='images_get_pk'),
     path('images/create/', CreateImages.as_view(), name='images_create'),
     path('images/edit/<int:pk>', EditImageInfo.as_view(), name='images_edit'),
-    path('images/delete/<int:pk>', DeleteImages.as_view(), name='test_images_delete'), #exxperimental
+    #path('images/delete/<int:pk>', DeleteImages.as_view(), name='test_images_delete'), #experimental
 
     path('tags/create/', CreateTags.as_view(), name='tags_create'),
     path('tags/get/auto/', GetTags.as_view({'get': 'get_autocomplete'}), name='tags_get'),

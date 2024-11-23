@@ -37,7 +37,6 @@ function Image(WrappedComponent) {
             )
             .catch(
                 error => {
-                    console.log(error)
                     setError(error)
                 }
             )
@@ -72,12 +71,12 @@ function ViewImage({imageData}){
                     <div className="w-full rounded shadow-md mb-4 md:mb-8"> 
                         <div className="p-1 md:p-2 mb-4 md:mb-8">   
                             <a
-                                href={`${import.meta.env.VITE_API_URL}${image}`}
+                                href={image}
                                 className="flex items-center justify-center"
                                 target="_blank"
                             >
                                 <img 
-                                    src={`${import.meta.env.VITE_API_URL}${image}`}
+                                    src={image}
                                     className="w-7/12 h-auto object-contain"
                                 />
                             </a>
@@ -93,7 +92,7 @@ function ViewImage({imageData}){
                                 <div class="bg-neutral-200 h-px my-2 md:my-4"></div>
                                 <p
                                     className="text-md md:text-xl break-words ml-16"
-                                >
+                                >   
                                     {description}
                                 </p>
                             </div>

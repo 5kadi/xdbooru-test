@@ -7,7 +7,7 @@ function ImageCard({data}) {
                 className='p-1 md:p-3 w-full h-40 flex justify-center items-center rounded shadow-transition'
             >
                 <img 
-                    src={`${import.meta.env.VITE_API_URL}${data.image}`}
+                    src={data.image}
                     className='rounded object-contain w-full h-full bg-gray-50'
                     loading='lazy'
                 />
