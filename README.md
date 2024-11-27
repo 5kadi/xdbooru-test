@@ -4,6 +4,7 @@
   <li>Django + Django Rest Framework</li>
   <li>PostgreSQL</li>
   <li>ReactJS + Vite</li>
+  <li>TailwindCSS</li>
   <li>Nginx</li>
   <li>Docker</li>
 </ul>
