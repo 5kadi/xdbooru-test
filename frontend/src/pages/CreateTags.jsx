@@ -12,7 +12,7 @@ function CreateTags(){
     const navigate = useNavigate()
 
     const [tag, setTag] = useState('')
-    const [type, setType] = useState('NE')
+    const [type, setType] = useState('')
     const [description, setDescription] = useState('')
     const [hover, setHover] = useState(false)
 

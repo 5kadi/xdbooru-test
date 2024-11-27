@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react"
 import { useLocation } from "react-router-dom"
 import api from "../api"
 import ImageCard from "../components/ImageCard"
-import '../styles/Images.css'
 import { ViewTags } from "../components/Tags"
 import NavMenu from "../components/NavMenu"
 import {SearchBar} from "../components/SearchBars"

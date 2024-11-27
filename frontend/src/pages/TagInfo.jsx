@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import NavMenu from "../components/NavMenu";
 import api from "../api";
+import ErrorWindow from "../components/ErrorWindow";
 import { useLocation, useParams } from "react-router-dom";
 import { TagSearchBar } from "../components/SearchBars";
 import { COLORS, TAGS_TYPES } from "../constants";
@@ -8,6 +9,8 @@ import { COLORS, TAGS_TYPES } from "../constants";
 
 
 function TagInfo(props) {
+    const [error, setError] = useState(null)
+
     var search = useLocation().search?.substring(5) //Im too lazy to parse this string lmao
     const [data, setData] = useState(null)
     
@@ -32,14 +35,15 @@ function TagInfo(props) {
         )
         .catch(
             error => {
-                alert(error)
+                setError(error)
             }
         )
 
     }   
 
     return (
-        <>
+        <>  
+            <ErrorWindow error={error} setError={setError}/>
             <NavMenu/>
             {
                 data ? 

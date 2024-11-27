@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import api from "../api"
-import { useNavigate } from "react-router-dom"
-import {SearchBar} from "./SearchBars"
 import { COLORS } from "../constants"
+import Loading from "./Loading"
 
 
 
@@ -35,7 +34,7 @@ const Tags = (WrappedComponent) => {
                 }
             )
         }
-        return tags ? <WrappedComponent tags={tags} imageId={imageId}/> : <>Loading...</>
+        return tags ? <WrappedComponent tags={tags} imageId={imageId}/> : <Loading/>
     }
 
 }

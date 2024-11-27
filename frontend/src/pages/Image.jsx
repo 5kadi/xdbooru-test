@@ -9,7 +9,7 @@ import ErrorWindow from "../components/ErrorWindow"
 import { USER_DATA } from "../constants"
 import { TagList, LazyTagList } from "../components/TagList"
 import ResizingTextarea from "../components/ResizingTextarea"
-import Comment from "postcss/lib/comment"
+import Loading from "../components/Loading"
 
 
 function Image(WrappedComponent) {
@@ -43,10 +43,11 @@ function Image(WrappedComponent) {
         }
 
         return imageData && !error ? 
-                <WrappedComponent imageData={imageData}/> 
+                    <WrappedComponent imageData={imageData}/> 
                 : error ?
-                <ErrorWindow error={error} setError={setError}/>
-                : <>Loading...</>
+                    <ErrorWindow error={error} setError={setError}/>
+                : 
+                    <Loading/>
     }
 }
  

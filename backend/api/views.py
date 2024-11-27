@@ -1,16 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied, RequestDataTooBig
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from .models import Images, Tags, Comments
 from .serializers import *
 from rest_framework import generics, viewsets, views
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, action, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from .pagination import StandardPaginator, ImagesPaginator
 from .utils import *
-from copy import copy
 
 
 #!!!ATTENTION!!!
@@ -233,6 +231,7 @@ class GetComments(generics.ListAPIView):
 #!!!ATTENTION!!!
 #TODO: implement likes (too hard)
 
+"""
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def GetUser(request):
@@ -249,5 +248,5 @@ def GetUser(request):
         user = request.user 
     serializer = UserSerializer(user)
     return Response(serializer.data)
-
+"""
 

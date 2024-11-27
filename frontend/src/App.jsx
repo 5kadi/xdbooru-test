@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Images from './pages/Images'
@@ -10,7 +9,6 @@ import ProtectedRoute from './utils/ProtectedRoute'
 import Logout from './pages/Logout'
 import {ViewImage, EditImage} from './pages/Image'
 import CreateTags from './pages/CreateTags'
-import CommentsList from './pages/CommentsList'
 import TagInfo from './pages/TagInfo'
 import './index.css'
 

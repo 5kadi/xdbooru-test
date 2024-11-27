@@ -8,7 +8,7 @@ export const TAGS_TYPES = {
     SO: 'SOURCE',
     CH: 'CHARACTER',
     SP: 'SPECIAL',
-    NE: 'NONE'  
+    //NE: 'NONE'  
 }
 
 export const COLORS = {

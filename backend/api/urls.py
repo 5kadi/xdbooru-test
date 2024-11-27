@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from .jwt_auth import CustomTokenObtainPairView
@@ -6,7 +6,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('user/get/', GetUser, name='user_get'),
+    #path('user/get/', GetUser, name='user_get'),
     path('user/create/', CreateUser.as_view(), name='user_create'),
 
     path('token/get/', CustomTokenObtainPairView.as_view(), name='token_get'),

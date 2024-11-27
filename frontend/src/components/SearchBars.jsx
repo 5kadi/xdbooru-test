@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import api from "../api"
 import { useNavigate } from "react-router-dom"
-import { TAGS_TYPES } from "../constants"
+import ErrorWindow from "./ErrorWindow"
 import { COLORS } from "../constants"
 
 //TODO: remove bloat hooks
 const BaseSearchBar = (WrappedComponent) => {
     return (props) => {
+        const [error, setError] = useState(null)
+
         const [inputTags, setInputTags] = useState('')
         const [autoTags, setAutoTags] = useState([])
         const tags = useRef()
@@ -42,20 +44,23 @@ const BaseSearchBar = (WrappedComponent) => {
             )
             .catch(
                 error => {
-                    alert(error)
+                    setError(error)
                 }
             )
     
         }
 
-        return <WrappedComponent 
-                    setInputTags={setInputTags} 
-                    inputTags={inputTags} 
-                    autoComplete={autoComplete} 
-                    autoTags={autoTags} 
-                    tags={tags}
-                    {...props}
-                />
+        return error ? 
+                    <ErrorWindow error={error} setError={setError}/>
+                :
+                    <WrappedComponent 
+                        setInputTags={setInputTags} 
+                        inputTags={inputTags} 
+                        autoComplete={autoComplete} 
+                        autoTags={autoTags} 
+                        tags={tags}
+                        {...props}
+                    />
     }
 }
 

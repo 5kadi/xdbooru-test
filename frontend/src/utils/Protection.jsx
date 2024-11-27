@@ -3,6 +3,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants"
 import { jwtDecode } from 'jwt-decode'
 import api from "../api"
 import { useState, useEffect } from "react"
+import Loading from "../components/Loading"
 
 export const withProtection = (WrappedComponent) => {
     return (props) => {
@@ -62,6 +63,9 @@ export const withProtection = (WrappedComponent) => {
             )
         }
     
-        return isAuthorized !== null ? <WrappedComponent isAuthorized={isAuthorized} {...props}/> : <div>Loading...</div>
+        return isAuthorized !== null ? 
+                <WrappedComponent isAuthorized={isAuthorized} {...props}/> 
+            : 
+                <Loading/>
     }
 }

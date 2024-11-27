@@ -1,5 +1,3 @@
-import { useRef } from "react"
-import api from "../api"
 
 function CommentCard({data}) {
     return (

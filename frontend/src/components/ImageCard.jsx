@@ -1,4 +1,3 @@
-import '../styles/ImageCard.css'
 
 function ImageCard({data}) {
     return (

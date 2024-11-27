@@ -1,7 +1,5 @@
 import ImageCard from "./ImageCard"
 import CommentCard from "./CommentCard"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
 
 
 

@@ -30,7 +30,9 @@ SECRET_KEY = 'django-insecure-ijrl=rbmic6f$!pkcycues0%qw2c$5mr@c9l^li(53%ja5$7&r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False #TODO: configure Nginx to server images
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    os.getenv('ALLOWED_HOST', '127.0.0.1')
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (

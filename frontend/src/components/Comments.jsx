@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api";
 import CommentCard from "./CommentCard";
-import { useLocation } from "react-router-dom";
 import ResizingTextarea from "./ResizingTextarea";
 import ErrorWindow from "./ErrorWindow";
 

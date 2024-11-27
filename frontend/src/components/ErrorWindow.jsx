@@ -1,14 +1,6 @@
-import { useEffect, useState } from "react"
-
 
 
 function ErrorWindow({error, setError}) {
-
-    useEffect(
-        () => {
-            console.log(error)
-        }, []
-    )
 
     return error && 
             <>
@@ -31,11 +23,14 @@ function ErrorWindow({error, setError}) {
                         </div>
                         <div className="p-1 mx-[5%] break-words text-xl">
                             {
-                                Object.values(error.response.data).map(
-                                    msg => (
-                                        <>{msg}</>
+                                error.response.data ? 
+                                    Object.values(error.response.data).map(
+                                        msg => (
+                                            <>{msg}</>
+                                        )
                                     )
-                                )
+                                :
+                                    'Something went wrong!'
                             }
                         </div>
                     </div>
