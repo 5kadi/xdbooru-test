@@ -12,8 +12,7 @@ services:
     build: 
       context: ./backend
     command: > 
-      sh -c "python3 manage.py makemigrations &&
-      python3 manage.py migrate --run-syncdb && 
+      sh -c "python3 manage.py migrate && 
       gunicorn backend.wsgi --bind 0.0.0.0:8000"
     ports:
       - "8000:8000"
@@ -24,6 +23,7 @@ services:
       - "postgresql.env"
     depends_on:
       - db
+      - nginx
   nginx:
     build:
       context: ./frontend
@@ -32,7 +32,7 @@ services:
     volumes:
       - media_storage:/backend/media
     depends_on:
-      - backend
+      - db
 volumes:
   db_storage:
   media_storage:
