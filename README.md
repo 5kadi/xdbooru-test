@@ -13,5 +13,9 @@
   <li>Shitty codebase</li>
 </ul>
 
-Docker guide:
-docker-compose pull -> docker-compose build -> docker compose up x2
+<p>Setup:</p>
+<ol>
+  <li>change VITE_API_URL and ALLOWED_HOST in ./frontend/.env and django.env respectively to your host machine IP address</li>
+  <li>docker-compose pull -> docker-compose build -> docker compose up x2</li>
+</ol>
+
