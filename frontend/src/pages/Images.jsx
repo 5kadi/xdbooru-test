@@ -6,6 +6,7 @@ import { ViewTags } from "../components/Tags"
 import NavMenu from "../components/NavMenu"
 import {SearchBar} from "../components/SearchBars"
 import ErrorWindow from "../components/ErrorWindow"
+import Loading from "../components/Loading"
 
 
 function Images() {
@@ -46,6 +47,9 @@ function Images() {
 
     return (
         <>  
+            {
+                (!data && !error) && <Loading/>
+            }
             <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
             <SearchBar></SearchBar>

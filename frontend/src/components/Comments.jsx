@@ -3,6 +3,7 @@ import api from "../api";
 import CommentCard from "./CommentCard";
 import ResizingTextarea from "./ResizingTextarea";
 import ErrorWindow from "./ErrorWindow";
+import Loading from "./Loading";
 
 
 function Comments({imageId}){
@@ -66,6 +67,9 @@ function Comments({imageId}){
  
     return (
         <>  
+            {
+                (!comments && !error) && <Loading/>
+            }
             <ErrorWindow error={error} setError={setError}/>
             <div className="container ">
                 <div className="w-full mb-8 md:mb-16">

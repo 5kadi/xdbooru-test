@@ -4,7 +4,7 @@
 
 
 .a-nav-link {
-    @apply p-1 md:p-2 text-gray-400 hover:text-gray-500 cursor-pointer
+    @apply p-1 md:p-2 text-gray-400 hover:text-gray-500 cursor-pointer my-auto
 }
 
 .selectable-text {

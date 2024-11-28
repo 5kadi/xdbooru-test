@@ -9,8 +9,6 @@ function Home() {
                 <h1 className="text-cyan-300 text-3xl md:text-6xl font-bold">XdBooru</h1><br/>
                 <SearchBar></SearchBar>
             </div>
-
-            
         </>
     )
 }

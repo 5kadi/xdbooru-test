@@ -15,7 +15,7 @@ const BaseSearchBar = (WrappedComponent) => {
     
         useEffect(
             () => {
-                tags.current = inputTags.trim().split(/\s+/)
+                tags.current = inputTags.toLowerCase().trim().split(/\s+/)
                 matchingTags()
                 //console.log(tags.current, inputTags, autoTags)
             }, [inputTags]

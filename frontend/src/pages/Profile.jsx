@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import ActivityInfoSlider from "../components/ActivityInfoSlider"
 import NavMenu from "../components/NavMenu"
 import ErrorWindow from "../components/ErrorWindow"
+import Loading from "../components/Loading"
 
 
 
@@ -40,6 +41,9 @@ function Profile({isLogged}) {
 
     return (
         <>  
+            {
+                (!profileData && !error) && <Loading/>
+            }
             <ErrorWindow error={error} setError={setError}/>
             <NavMenu></NavMenu>
             <div>
